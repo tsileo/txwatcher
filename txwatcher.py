@@ -1,23 +1,27 @@
-import websocket
 import thread
 import time
 import json
 import logging
+
+from events import Events
+import websocket
 
 logging.basicConfig(level=logging.DEBUG)
 
 log = logging.getLogger(__name__)
 
 
-class TxWatcher(object):
+class TxWatcher(Events):
+    __events__ = ['on_tx']
+
     def __init__(self, addresses=[]):
         self.addresses = addresses
+        self.events = Events()
 
     def on_message(self, ws, message):
         data = json.loads(message)
         log.debug("Receiving: {0}".format(data))
-        d = [d for d in data['x']['out'] if d['addr'] in self.addresses]
-        print(sum([a['value'] / 100000000.0 for a in d]))
+        self.on_tx(data)
 
     def on_error(self, ws, error):
         log.exception(error)
@@ -47,3 +51,13 @@ class TxWatcher(object):
                                     on_close=self.on_close)
         ws.on_open = self.on_open
         ws.run_forever()
+
+if __name__ == '__main__':
+    w = TxWatcher(['1CijD3ustVqsxUxo1JugyqkrePmBb9kdDb',
+                   '1NWWa7MutJQugmaL5icy4zmTuZZp2eRqKA'])
+
+    def printer(data):
+        print(data)
+
+    w.on_tx += printer
+    w.run_forever()

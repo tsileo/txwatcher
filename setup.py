@@ -16,7 +16,7 @@ setup(
     url="https://github.com/tsileo/txwatcher",
     py_modules=['txwatcher'],
     long_description=read('README.rst'),
-    install_requires=[],
+    install_requires=['events', 'websocket-client'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

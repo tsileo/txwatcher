@@ -11,7 +11,51 @@ QuickStart
 
 	from txwatcher import TxWatcher
 
+	w = TxWatcher(['18eGUUxUsSetQYxJcQXEQTjSCUETEFeA4E'])
 
+	def tx_printer(tx):
+		print(tx)
+
+	# You can add as many callbacks as you want
+	w.on_tx += tx_printer
+
+	w.run_forever()
+
+Transactions format
+===================
+
+.. code-block:: python
+
+	{
+	    "op": "utx",
+	    "x": {
+	        "hash": "f6c51463ea867ce58588fec2a77e9056046657b984fd28b1482912cdadd16374",
+	        "ver": 1,
+	        "vin_sz": 4,
+	        "vout_sz": 2,
+	        "lock_time": "Unavailable",
+	        "size": 796,
+	        "relayed_by": "209.15.238.250",
+	        "tx_index": 3187820,
+	        "time": 1331300839,
+	        "inputs": [
+	            {
+	                "prev_out": {
+	                    "value": 10000000,
+	                    "type": 0,
+	                    "addr": "12JSirdrJnQ8QWUaGZGiBPBYD19LxSPXho"
+	                }
+	            }
+	        ],
+	        "out": [
+	            {
+	                "value": 2800000000,
+	                "type": 0,
+	                "addr": "1FzzMfNt46cBeS41r6WHDH1iqxSyzmxChw"
+	            }
+	        ]
+	    }
+	}
 
 
 Misc
