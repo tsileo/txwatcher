@@ -20,6 +20,15 @@ QuickStart
 	w.on_tx += tx_printer
 
 	w.run_forever()
+	# or
+	import thread
+	thread.start_new_thread(w.run_forever, ())
+	
+	# Do some work
+
+	w.add_addresses(*['16xg9kBKUR2S6bmyccCyPichCpMNMPATAH',
+					  '18ZcxHsKnc4a1AhnThQ2tiLVjQehxKaGFX'])
+
 
 Transactions format
 ===================

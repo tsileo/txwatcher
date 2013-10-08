@@ -15,7 +15,7 @@ class TxWatcher(Events):
     __events__ = ['on_tx']
 
     def __init__(self, addresses=[]):
-        self.addresses = addresses
+        self.addresses = set(addresses)
         self.events = Events()
 
     def on_message(self, ws, message):
@@ -29,13 +29,15 @@ class TxWatcher(Events):
     def on_close(self, ws):
         log.critical('Closing WebSocket connection')
 
+    def add_addresses(self, *addresses, **kwargs):
+        for addr in addresses:
+            time.sleep(0.1)
+            log.debug('Sending: {"op": "addr_sub", "addr": "' + addr + '"}')
+            kwargs.get('ws', self.ws).send('{"op": "addr_sub", "addr": "' + addr + '"}')
+
     def on_open(self, ws):
         def run(*args):
-            for addr in self.addresses:
-                time.sleep(0.1)
-                log.debug('Sending: {"op": "addr_sub", "addr": "' + addr + '"}')
-                ws.send('{"op": "addr_sub", "addr": "' + addr + '"}')
-
+            self.add_addresses(*self.addresses, ws=ws)
             # Ping every 30 secs so we won't get disconnected
             while 1:
                 log.debug('Sending ping')
@@ -45,12 +47,12 @@ class TxWatcher(Events):
 
     def run_forever(self):
         log.info('Starting Blockchain WebSocket server...')
-        ws = websocket.WebSocketApp("ws://ws.blockchain.info:8335/inv",
-                                    on_message=self.on_message,
-                                    on_error=self.on_error,
-                                    on_close=self.on_close)
-        ws.on_open = self.on_open
-        ws.run_forever()
+        self.ws = websocket.WebSocketApp("ws://ws.blockchain.info:8335/inv",
+                                         on_message=self.on_message,
+                                         on_error=self.on_error,
+                                         on_close=self.on_close)
+        self.ws.on_open = self.on_open
+        self.ws.run_forever()
 
 if __name__ == '__main__':
     w = TxWatcher(['1CijD3ustVqsxUxo1JugyqkrePmBb9kdDb',
