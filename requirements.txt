@@ -1,1 +1,2 @@
 websocket-client==0.12.0
+Events==0.2.0

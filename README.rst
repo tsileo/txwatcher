@@ -2,7 +2,7 @@
  TxWatcher
 ===========
 
-A little Python utility that lets you monitor a couple of Bitcoin addresses through `Blockchain Websocket API <http://blockchain.info/api/api_websocket>`_ and perform custom callbacks on transactions happening on these addresses.
+A little Python utility that lets you monitor a couple of Bitcoin addresses through `Blockchain Websocket API <http://blockchain.info/api/api_websocket>`_ and perform custom callbacks.
 
 QuickStart
 ==========
