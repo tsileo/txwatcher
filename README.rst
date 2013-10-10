@@ -91,6 +91,7 @@ Using TxWatcher within Flask
 You can start TxWatcher in a separate thread and have it running within your Flask app (or any Python web framework).
 
 .. code-block:: python
+
 	from flask import Flask
 	app = Flask(__name__)
 
