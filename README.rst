@@ -2,7 +2,23 @@
  TxWatcher
 ===========
 
-A little Python utility that lets you monitor a couple of Bitcoin addresses through `Blockchain Websocket API <http://blockchain.info/api/api_websocket>`_ and perform custom callbacks.
+A little Python utility that lets you monitor Bitcoin addresses through `Blockchain Websocket API <http://blockchain.info/api/api_websocket>`_ and perform custom callbacks.
+
+
+.. image:: https://pypip.in/v/txwatcher/badge.png
+        :target: https://crate.io/packages/txwatcher
+
+.. image:: https://pypip.in/d/txwatcher/badge.png
+        :target: https://crate.io/packages/txwatcher
+
+
+Installation
+============
+
+.. code-block::
+
+    $ pip install txwatcher
+
 
 QuickStart
 ==========
@@ -26,12 +42,11 @@ QuickStart
 	
 	# Do some work
 
-	w.add_addresses(*['16xg9kBKUR2S6bmyccCyPichCpMNMPATAH',
-					  '18ZcxHsKnc4a1AhnThQ2tiLVjQehxKaGFX'])
+	w.add_addresses(*['16xg9kBKUR2S6bmyccCyPichCpMNMPATAH'])
 
 
 Transactions format
-===================
+-------------------
 
 .. code-block:: python
 
@@ -68,15 +83,36 @@ Transactions format
 
 
 Misc
-====
+----
 
 Using TxWatcher within Flask
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can start TxWatcher in a separate thread and have it running within your Flask app.
+You can start TxWatcher in a separate thread and have it running within your Flask app (or any Python web framework).
 
 .. code-block:: python
+	from flask import Flask
+	app = Flask(__name__)
 
+	@app.route("/")
+	def hello():
+	    return "Hello World!"
+
+	if __name__ == "__main__":
+	    # First, start TxWatcher
+	    tw = TxWatcher([a['address'] for a in col_urls.find()])
+	    tw.on_tx += new_tx
+
+	    thread.start_new_thread(tw.run_forever, ())
+
+	    # Then, start the Flask app
+	    app.run()
+
+
+Contribution
+============
+
+Feel free to submit a pull request!
 
 
 Donation

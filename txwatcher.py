@@ -53,13 +53,3 @@ class TxWatcher(Events):
                                          on_close=self.on_close)
         self.ws.on_open = self.on_open
         self.ws.run_forever()
-
-if __name__ == '__main__':
-    w = TxWatcher(['1CijD3ustVqsxUxo1JugyqkrePmBb9kdDb',
-                   '1NWWa7MutJQugmaL5icy4zmTuZZp2eRqKA'])
-
-    def printer(data):
-        print(data)
-
-    w.on_tx += printer
-    w.run_forever()
