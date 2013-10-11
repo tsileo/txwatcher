@@ -110,6 +110,12 @@ You can start TxWatcher in a separate thread and have it running within your Fla
 	    app.run()
 
 
+Changelog
+=========
+
+See CHANGES.rst.
+
+
 Contribution
 ============
 

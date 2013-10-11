@@ -7,7 +7,7 @@ def read(fname):
 
 setup(
     name="txwatcher",
-    version="0.1.0",
+    version="0.1.1",
     author="Thomas Sileo",
     author_email="thomas.sileo@gmail.com",
     description=".",
