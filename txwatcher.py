@@ -55,12 +55,15 @@ class TxWatcher(Events):
         self.ws.run_forever()
 
     def run_forever(self):
+        delay = 1
         while 1:
+            # Trying to run_forever using an exponential backoff
             try:
                 self._run_forever()
             except websocket.WebSocketException, exc:
                 log.exception(exc)
-                time.sleep(1)
-                log.info('Trying to restart connection')
+                log.warning('Trying to restart connection in {0} seconds...'.format(delay))
+                time.sleep(delay)
+                delay *= 2
             except Exception, exc:
                 raise exc
