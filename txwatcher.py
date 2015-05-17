@@ -47,7 +47,7 @@ class TxWatcher(Events):
 
     def _run_forever(self):
         log.info('Starting Blockchain WebSocket server...')
-        self.ws = websocket.WebSocketApp("ws://ws.blockchain.info:8335/inv",
+        self.ws = websocket.WebSocketApp("wss://ws.blockchain.info/inv",
                                          on_message=self.on_message,
                                          on_error=self.on_error,
                                          on_close=self.on_close)
